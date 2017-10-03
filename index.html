@@ -13,5 +13,27 @@
   <h2 id="weather-kind"></h2>
   <img id="weather-icon" src="" alt="">
 </main>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+  $(document).ready(function () {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+          $.ajax({
+            url: "https://fcc-weather-api.glitch.me/api/current?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude,
+            cache: false
+          })
+            .then(
+              function (data) {
+                $("#weather-location").text(data.name + ", " + data.sys.country);
+                $("#weather-kind").text(data.weather[0].main);
+                $("#weather-icon").attr("src", data.weather[0].icon);
+              });
+        },
+        function () {
+          console.log("Weather fetch failed.");
+        });
+    }
+  });
+</script>
 </body>
 </html>
