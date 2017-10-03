@@ -11,3 +11,8 @@ h1 {
 h2 {
   font-size: 24px;
 }
+
+#toggle-degree {
+  cursor: pointer;
+  color: #87cefa;
+}
