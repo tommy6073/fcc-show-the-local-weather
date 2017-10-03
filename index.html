@@ -15,6 +15,7 @@
 </main>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
+  let temp;
   $(document).ready(function () {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function (position) {
@@ -25,6 +26,19 @@
             .then(
               function (data) {
                 $("#weather-location").text(data.name + ", " + data.sys.country);
+                temp = Math.floor(data.main.temp * 10) / 10;
+                $("#temp").text(temp + " °");
+                const $toggleDegree = $("#toggle-degree");
+                $toggleDegree.text("C");
+                $toggleDegree.click(function () {
+                  if ($(this).text() === "C") {
+                    $("#temp").text(Math.floor((temp * 9 / 5 + 32) * 10) / 10 + " °");
+                    $(this).text("F");
+                  } else {
+                    $("#temp").html(temp + " °");
+                    $(this).text("C");
+                  }
+                });
                 $("#weather-kind").text(data.weather[0].main);
                 $("#weather-icon").attr("src", data.weather[0].icon);
               });
